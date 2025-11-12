@@ -19,6 +19,7 @@ export default class User {
             this.conn = _conn;
             this.initConnection();
         })
+        this.messages = [];
     }
 
     connect(destId) {
@@ -43,17 +44,25 @@ export default class User {
     }
 
     receiveDataCallback(data) {
-        // TODO: tratar recebimento de mensagens/dados
+        this.addMessage(this.conn.peer, data);
         console.log(`Mensagem recebida: ${data}`);
     }
 
-    sendMessage(msg) {
+    sendMessage(message) {
         if (!this.is_connected) {
             console.error("Tentativa de enviar mensagem antes de fazer conexão.");
             return;
         }
-        this.conn.send(msg);
-        console.log(`Mensagem enviada: ${msg}`);
+        this.conn.send(message);
+        this.addMessage(this.id, message)
+        console.log(`Mensagem enviada: ${message}`);
+    }
+
+    addMessage(sender, message) {
+        this.messages.push({
+            'sender': sender,
+            'message': message
+        })
     }
 
 }
