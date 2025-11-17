@@ -20,6 +20,9 @@ export default class User {
             this.initConnection();
         })
         this.messages = [];
+
+
+        this.chatMessages = document.querySelector('.chatMensagens');
     }
 
     connect(destId) {
@@ -62,7 +65,38 @@ export default class User {
         this.messages.push({
             'sender': sender,
             'message': message
-        })
+        });
+
+        const msgDiv = document.createElement("div");
+        msgDiv.className = sender === this.id ? "mensagem user-mesagem" : "mensagem botMen";
+
+        const contentDiv = document.createElement("div");
+        contentDiv.className = "conteudoMensagem";
+        contentDiv.textContent = message;
+
+        msgDiv.appendChild(contentDiv);
+        this.chatMessages.appendChild(msgDiv);
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
 
+    renderAllMessages() {
+        this.chatMessages.innerHTML = "";
+
+        for (const messageData of this.messages) {
+            const sender = messageData.sender;
+            const message = messageData.message;
+
+            const msgDiv = document.createElement("div");
+            msgDiv.className = sender === this.id ? "mensagem user-mesagem" : "mensagem botMen";
+
+            const contentDiv = document.createElement("div");
+            contentDiv.className = "conteudoMensagem";
+            contentDiv.textContent = message;
+
+            msgDiv.appendChild(contentDiv);
+            this.chatMessages.appendChild(msgDiv);
+        }
+
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    }
 }
