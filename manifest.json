@@ -11,12 +11,12 @@
   "dir": "auto",
   "icons": [
     {
-      "src": "mobile.png",
+      "src": "icons/mobile.png",
       "type": "image/png",
       "sizes": "512x512"
     },
     {
-      "src": "mobile.png.192x192.png",
+      "src": "icons/mobile.png.192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     }
