@@ -12,45 +12,68 @@ body {
   justify-content: center;
   align-items: center;
   background: #eaeaea;
+  font-family: 'Arial', sans-serif;
 }
 
 .containerChat {
   width: 100%;
   max-width: 600px;
-  height: 100vh;                
+  height: 100vh;
   background: white;
   display: flex;
   flex-direction: column;
-  border-radius: 0;             
-  overflow: hidden;             
+  border-radius: 12px; 
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
 }
 
 .videoPlayer {
-  background: #000;
-  height: 30vh;                 
+  background: #111;
+  height: 30vh;
   color: white;
   padding: 20px;
-
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .chatMensagens {
-  flex: 1;                      
+  flex: 1;
   padding: 20px;
-  overflow-y: auto;             
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
   background: #fafafa;
 }
 
 .conteudoMensagem {
-  padding: 12px 14px;
-  border-radius: 12px;
-  max-width: 75%;               
+  padding: 12px 18px;
+  position: relative;
+  border-radius: 16px;  
+  max-width: 75%;
   word-wrap: break-word;
+  background: #f1f1f1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+  margin: 10px 0;
+  transition: all 0.3s ease;
+  animation: slide-in 0.5s ease-out;  
+}
+
+.conteudoMensagem:hover {
+  transform: translateY(-5px);  
+}
+
+.conteudoMensagem::after {
+  content: '';
+  position: absolute;
+  border: 0.5em solid transparent;
+  border-top-color: #3a8f63;
+  border-right-color: #3a8f63;
+  right: 100%;
+  top: 25%;
+  transform: skewY(20deg);
+  transform-origin: 100% 100%;
 }
 
 .user-mesagem {
@@ -61,6 +84,7 @@ body {
 .user-mesagem .conteudoMensagem {
   background: #3a8f63;
   color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
 }
 
 .botMen {
@@ -73,16 +97,13 @@ body {
   color: #333;
 }
 
-
 .inputChat {
   padding: 15px;
   background: #f8f9fa;
   border-top: 1px solid #dcdcdc;
-
   display: flex;
   gap: 10px;
-
-  position: sticky;             
+  position: sticky;
   bottom: 0;
 }
 
@@ -92,6 +113,12 @@ body {
   border-radius: 25px;
   border: 1px solid #ccc;
   font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+.chatInput:focus {
+  border-color: #3a8f63; 
+  outline: none;
 }
 
 .enviarBtn {
@@ -102,12 +129,33 @@ body {
   border-radius: 25px;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.enviarBtn:hover {
+  background: #2d6a47; 
 }
 
 .chatMensagens::-webkit-scrollbar {
   width: 6px;
 }
+
 .chatMensagens::-webkit-scrollbar-thumb {
   background: #bbb;
   border-radius: 3px;
+}
+
+.chatMensagens::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
