@@ -17,7 +17,8 @@
             <input class="hidden" type="file" id="videoInput" accept="video/*">
             <div class="mediaControls hidden" id="mediaControls">
                 <button id="togglePlayBtn">
-                    <svg id="pauseIcon" class="pauseIcon" width="25px" height="25px" version="1.1" viewBox="-1 0 8 8" xmlns="http://www.w3.org/2000/svg">
+                    <svg id="pauseIcon" class="pauseIcon" width="18px" height="18px" version="1.1" viewBox="-1 0 8 8"
+                        xmlns="http://www.w3.org/2000/svg">
                         <title>pause [#1010]</title>
                         <desc>Created with Sketch.</desc>
                         <g fill="none" fill-rule="evenodd">
@@ -29,8 +30,8 @@
                         </g>
                     </svg>
 
-                    <svg id="playIcon" class="playIcon hidden" width="25px" height="25px" version="1.1" viewBox="-.5 0 8 8"
-                        xmlns="http://www.w3.org/2000/svg">
+                    <svg id="playIcon" class="playIcon hidden" width="18px" height="18px" version="1.1"
+                        viewBox="-.5 0 8 8" xmlns="http://www.w3.org/2000/svg">
                         <title>play [#1001]</title>
                         <desc>Created with Sketch.</desc>
                         <g fill="none" fill-rule="evenodd">
@@ -41,8 +42,12 @@
                             </g>
                         </g>
                     </svg>
-
                 </button>
+                <div class="timestamp" id="timestamp">
+                    <h3 id="currentTime">00:00:00</h3>
+                    <h3 style="padding-left: 5px; padding-right: 5px;"> / </h3>
+                    <h3 id="duration">00:00:00</h3>
+                </div>
             </div>
         </div>
         <div class="chatMensagens" id="chatMensagens">
