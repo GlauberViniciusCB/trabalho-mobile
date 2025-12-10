@@ -25,27 +25,3 @@ sendBtn.addEventListener('click', (e) => {
 
     user.sendMessage(message);
 });
-
-const uploadBtn = document.getElementById('uploadBtn');
-const videoInput = document.getElementById('videoInput');
-const videoPlayer = document.getElementById('videoPlayer');
-
-uploadBtn.addEventListener('click', (e) => {
-    videoInput.click()
-});
-videoInput.addEventListener('change', (e) => {
-    const file = videoInput.files[0];
-    console.log(`[DEBUG]: Arquivo recebido: "${file.name}"`);
-
-    let media = URL.createObjectURL(file);
-    playVideo(media);
-});
-
-function playVideo(media) {
-    document.querySelector('.videoPlayer').classList.remove('barulho');
-    document.querySelector('.uploadBtn').classList.add('hidden');
-
-    videoPlayer.src = media;
-    videoPlayer.style.display = "block";
-    videoPlayer.play();
-}
