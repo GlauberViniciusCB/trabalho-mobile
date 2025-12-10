@@ -11,10 +11,39 @@
 
 <body>
     <div class="containerChat">
-        <div class="videoPlayer barulho">
+        <div class="videoPlayer barulho" id="videoPlayerDiv">
             <video id="videoPlayer" src=""></video>
             <button class="uploadBtn" id="uploadBtn">Fazer Upload</button>
             <input class="hidden" type="file" id="videoInput" accept="video/*">
+            <div class="mediaControls hidden" id="mediaControls">
+                <button id="togglePlayBtn">
+                    <svg id="pauseIcon" class="pauseIcon" width="25px" height="25px" version="1.1" viewBox="-1 0 8 8" xmlns="http://www.w3.org/2000/svg">
+                        <title>pause [#1010]</title>
+                        <desc>Created with Sketch.</desc>
+                        <g fill="none" fill-rule="evenodd">
+                            <g transform="translate(-67 -3765)" fill="#fff">
+                                <g transform="translate(56 160)">
+                                    <path d="m11 3613h2v-8h-2v8zm4 0h2v-8h-2v8z"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+
+                    <svg id="playIcon" class="playIcon hidden" width="25px" height="25px" version="1.1" viewBox="-.5 0 8 8"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <title>play [#1001]</title>
+                        <desc>Created with Sketch.</desc>
+                        <g fill="none" fill-rule="evenodd">
+                            <g transform="translate(-427 -3765)" fill="#fff">
+                                <g transform="translate(56 160)">
+                                    <polygon points="371 3605 371 3613 378 3609"></polygon>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+
+                </button>
+            </div>
         </div>
         <div class="chatMensagens" id="chatMensagens">
             <div class="mensagem botMen">
