@@ -1,6 +1,6 @@
 class VideoPlayer {
 
-    constructor(uploadBtnId, videoInputId, videoPlayerId, mediaControlsId, togglePlayBtnId, videoPlayerDivId, pauseIconId, playIconId, currentTimeId, durationId) {
+    constructor(uploadBtnId, videoInputId, videoPlayerId, mediaControlsId, togglePlayBtnId, videoPlayerDivId, pauseIconId, playIconId, currentTimeId, durationId, videoSubtitlesId, subtitlesBtnId, subtitlesInputId) {
         this.uploadBtn = document.getElementById(uploadBtnId);
         this.input = document.getElementById(videoInputId);
         this.player = document.getElementById(videoPlayerId);
@@ -11,6 +11,9 @@ class VideoPlayer {
         this.pauseIcon = document.getElementById(pauseIconId);
         this.currentTime = document.getElementById(currentTimeId);
         this.duration = document.getElementById(durationId);
+        this.subtitles = document.getElementById(videoSubtitlesId);
+        this.subtitlesBtn = document.getElementById(subtitlesBtnId);
+        this.subtitlesInput = document.getElementById(subtitlesInputId);
 
         this.isVideoPlaying = false;
 
@@ -20,9 +23,24 @@ class VideoPlayer {
     init() {
         this.uploadBtn.addEventListener('click', () => this.handleUploadClick());
         this.input.addEventListener('change', (e) => this.handleFileChange(e));
+        this.subtitlesInput.addEventListener('change', (e) => this.handleSubtitlesChange(e));
         this.playerDiv.addEventListener('mouseenter', (e) => this.handleMouseEnter(e));
         this.playerDiv.addEventListener('mouseleave', (e) => this.handleMouseLeave(e));
         this.togglePlayBtn.addEventListener('click', (e) => this.handleTogglePlayBtn(e));
+        this.subtitlesBtn.addEventListener('click', (e) => this.handleSubtitlesBtnClick(e));
+    }
+
+    handleSubtitlesChange(e) {
+        const file = this.subtitlesInput.files[0];
+        console.log(`[DEBUG]: Arquivo de legendas recebido: "${file.name}"`)
+
+        const trackUrl = URL.createObjectURL(file);
+        this.subtitles.src = trackUrl;
+    }
+
+    handleSubtitlesBtnClick(e) {
+        e.preventDefault();
+        this.subtitlesInput.click();
     }
 
     handleUploadClick() {
@@ -118,4 +136,4 @@ class VideoPlayer {
     }
 }
 
-const videoPlayer = new VideoPlayer('uploadBtn', 'videoInput', 'videoPlayer', 'mediaControls', 'togglePlayBtn', 'videoPlayerDiv', 'pauseIcon', 'playIcon', 'currentTime', 'duration');
+const videoPlayer = new VideoPlayer('uploadBtn', 'videoInput', 'videoPlayer', 'mediaControls', 'togglePlayBtn', 'videoPlayerDiv', 'pauseIcon', 'playIcon', 'currentTime', 'duration', 'videoSubtitles', 'subtitlesBtn', 'subtitlesInput');
