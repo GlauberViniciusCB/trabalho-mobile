@@ -34,8 +34,27 @@ class VideoPlayer {
         const file = this.subtitlesInput.files[0];
         console.log(`[DEBUG]: Arquivo de legendas recebido: "${file.name}"`)
 
+        let type = file.name.substring(file.name.length - 4, file.name.length)
         const trackUrl = URL.createObjectURL(file);
-        this.subtitles.src = trackUrl;
+        if (type === '.vtt') {
+            this.subtitles.src = trackUrl;
+        }
+        else if (type === '.srt') {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const srtContent = e.target.result;
+
+                const vttContent = srt2webvtt(srtContent);
+
+                const vttBlob = new Blob([vttContent], { type: 'text/vtt' });
+
+                const trackUrl = URL.createObjectURL(vttBlob);
+                this.subtitles.src = trackUrl;
+            };
+
+            reader.readAsText(file);
+        }
     }
 
     handleSubtitlesBtnClick(e) {
@@ -134,6 +153,7 @@ class VideoPlayer {
 
         this.play();
     }
+
 }
 
 const videoPlayer = new VideoPlayer('uploadBtn', 'videoInput', 'videoPlayer', 'mediaControls', 'togglePlayBtn', 'videoPlayerDiv', 'pauseIcon', 'playIcon', 'currentTime', 'duration', 'videoSubtitles', 'subtitlesBtn', 'subtitlesInput');
