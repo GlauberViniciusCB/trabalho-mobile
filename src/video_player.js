@@ -1,9 +1,9 @@
-class VideoPlayer {
+export default class VideoPlayer {
 
-    constructor(uploadBtnId, videoInputId, videoPlayerId, mediaControlsId, togglePlayBtnId, videoPlayerDivId, pauseIconId, playIconId, currentTimeId, durationId, videoSubtitlesId, subtitlesBtnId, subtitlesInputId) {
+    constructor(uploadBtnId, videoInputId, videoPlayerId, mediaControlsId, togglePlayBtnId, videoPlayerDivId, pauseIconId, playIconId, currentTimeId, durationId, videoSubtitlesId, subtitlesBtnId, subtitlesInputId, user) {
         this.uploadBtn = document.getElementById(uploadBtnId);
         this.input = document.getElementById(videoInputId);
-        this.player = document.getElementById(videoPlayerId);
+        this.video = document.getElementById(videoPlayerId);
         this.mediaControls = document.getElementById(mediaControlsId);
         this.togglePlayBtn = document.getElementById(togglePlayBtnId);
         this.playerDiv = document.getElementById(videoPlayerDivId);
@@ -14,6 +14,8 @@ class VideoPlayer {
         this.subtitles = document.getElementById(videoSubtitlesId);
         this.subtitlesBtn = document.getElementById(subtitlesBtnId);
         this.subtitlesInput = document.getElementById(subtitlesInputId);
+        this.user = user;
+        this.mediaStream = null;
 
         this.isVideoPlaying = false;
 
@@ -71,7 +73,7 @@ class VideoPlayer {
         console.log(`[DEBUG]: Arquivo recebido: "${file.name}"`);
 
         const media = URL.createObjectURL(file);
-        this.startVideo(media);
+        this.startVideo(media, false, true);
     }
 
     handleMouseEnter(e) {
@@ -97,17 +99,18 @@ class VideoPlayer {
     }
 
     pause(e) {
-        this.player.pause();
+        this.video.pause();
         this.isVideoPlaying = false;
 
         this.pauseIcon.classList.add('hidden');
         this.playIcon.classList.remove('hidden');
     }
 
-    play(e) {
-        this.player.play();
+    async play(e) {
+        await this.video.play();
         this.isVideoPlaying = true;
 
+        this.video.muted = false;
         this.playIcon.classList.add('hidden');
         this.pauseIcon.classList.remove('hidden');
         this.updateCurrentTime();
@@ -118,10 +121,10 @@ class VideoPlayer {
             return;
         }
 
-        let currentTimeFormatted = VideoPlayer.formatTime(this.player.currentTime);
+        let currentTimeFormatted = VideoPlayer.formatTime(this.video.currentTime);
         this.currentTime.textContent = currentTimeFormatted;
 
-        let timeout = (1.0 - (this.player.currentTime % 1)) * 1000;
+        let timeout = (1.0 - (this.video.currentTime % 1)) * 1000;
         setTimeout(() => {
             this.updateCurrentTime();
         }, timeout);
@@ -139,21 +142,30 @@ class VideoPlayer {
             String(secs).padStart(2, '0');
     }
 
-    startVideo(media) {
+    async startVideo(media, isMediaStream = false, isCallStarter = false) {
         document.querySelector('.videoPlayer').classList.remove('barulho');
         document.querySelector('.uploadBtn').classList.add('hidden');
 
-        this.player.src = media;
-        this.player.style.display = "block";
+        if (isMediaStream) {
+            this.video.srcObject = media;
+        }
+        else {
+            this.video.src = media;
+        }
+        
+        this.video.style.display = "block";
 
-        this.player.addEventListener('loadedmetadata', () => {
-            let durationTime = VideoPlayer.formatTime(this.player.duration);
+        this.video.addEventListener('loadedmetadata', () => {
+            let durationTime = VideoPlayer.formatTime(this.video.duration);
             this.duration.textContent = durationTime;
         });
 
-        this.play();
+        await this.play();
+
+        this.mediaStream = this.video.captureStream();
+        if (isCallStarter) {
+            this.user.startCall(this.mediaStream);
+        }
     }
 
 }
-
-const videoPlayer = new VideoPlayer('uploadBtn', 'videoInput', 'videoPlayer', 'mediaControls', 'togglePlayBtn', 'videoPlayerDiv', 'pauseIcon', 'playIcon', 'currentTime', 'duration', 'videoSubtitles', 'subtitlesBtn', 'subtitlesInput');

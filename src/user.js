@@ -6,19 +6,32 @@ export default class User {
         this.peer = new Peer();
         this.conn = null;
         this.id = "";
-        this.is_connected = false;
-        this.is_peer_created = false;
+        this.peerId = "";
+        this.isConnected = false;
+        this.isPeerCreated = false;
+        this.call = null;
+        this.isOnCall = false;
 
         this.peer.on('open', (_id) => {
             this.id = _id;
-            this.is_peer_created = true;
+            this.isPeerCreated = true;
             console.log(`Peer criado com ID: ${_id}`);
         });
 
         this.peer.on('connection', (_conn) => {
             this.conn = _conn;
             this.initConnection();
-        })
+        });
+
+        this.peer.on('call', (call) => {
+            this.call = call;
+            this.receiveCall();
+        });
+
+        this.peer.on('error', (error) => {
+            console.error(`PeerJS Error: ${error}`);
+        });
+
         this.messages = [];
 
 
@@ -26,7 +39,7 @@ export default class User {
     }
 
     connect(destId) {
-        if (!this.is_peer_created) {
+        if (!this.isPeerCreated) {
             console.error("Tentativa de conexão antes do peer ser criado");
             return;
         }
@@ -38,11 +51,12 @@ export default class User {
     }
 
     initConnection() {
-        this.is_connected = true;
+        this.isConnected = true;
         this.conn.on('data', (data) => {
             this.receiveDataCallback(data);
         });
 
+        this.peerId = this.conn.peer;
         console.log(`Conexão estabelecida com ID: ${this.conn.peer}`);
     }
 
@@ -52,7 +66,7 @@ export default class User {
     }
 
     sendMessage(message) {
-        if (!this.is_connected) {
+        if (!this.isConnected) {
             console.error("Tentativa de enviar mensagem antes de fazer conexão.");
             return;
         }
@@ -98,5 +112,40 @@ export default class User {
         }
 
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    }
+
+    startCall(mediaStream) {
+        if (!this.isConnected) {
+            console.error("Tentativa de ligação antes de fazer conexão.");
+            return;
+        }
+
+        this.call = this.peer.call(this.peerId, mediaStream);
+        this.isOnCall = true;
+
+        this.call.on('error', (error) => {
+            console.error(`PeerJS Error: ${error}`);
+        });
+
+        console.log("[DEBUG]: Chamada feita.")
+    }
+
+    receiveStreamCallback(stream) {
+        this.onStream?.(stream);
+    }
+
+    receiveCall() {
+        console.log("[DEBUG}: Chamada recebida.")
+
+        this.call.answer(new MediaStream());
+
+        this.isOnCall = true;
+        this.call.on('stream', (stream) => {
+            this.receiveStreamCallback(stream);
+        });
+
+        this.call.on('error', (error) => {
+            console.error(`PeerJS Error: ${error}`);
+        });
     }
 }

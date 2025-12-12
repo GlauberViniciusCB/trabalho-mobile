@@ -1,5 +1,6 @@
 import './style.css'
 import User from './user.js'
+import VideoPlayer from './video_player.js';
 
 const user = new User();
 
@@ -16,7 +17,7 @@ sendBtn.addEventListener('click', (e) => {
         return;
     }
 
-    if (!user.is_connected) {
+    if (!user.isConnected) {
         if (message.startsWith('/connect')) {
             user.connect(message.split(' ')[1]);
         }
@@ -25,3 +26,8 @@ sendBtn.addEventListener('click', (e) => {
 
     user.sendMessage(message);
 });
+
+const videoPlayer = new VideoPlayer('uploadBtn', 'videoInput', 'videoPlayer', 'mediaControls', 'togglePlayBtn', 'videoPlayerDiv', 'pauseIcon', 'playIcon', 'currentTime', 'duration', 'videoSubtitles', 'subtitlesBtn', 'subtitlesInput', user);
+user.onStream = (stream) => {
+    videoPlayer.startVideo(stream, true, false);
+}

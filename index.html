@@ -12,7 +12,7 @@
 <body>
     <div class="containerChat">
         <div class="videoPlayer barulho" id="videoPlayerDiv">
-            <video id="videoPlayer" src="">
+            <video id="videoPlayer" src="" muted="muted">
                 <track id="videoSubtitles" src="" kind="subtitles" srclang="en" label="English"
                     default />
             </video>
@@ -79,7 +79,7 @@
     </div>
     <script type="module" src="/src/main.js"></script>
     <script src="/src/srt_converter.js"></script>
-    <script src="/src/video_player.js"></script>
+    <script type="module" src="/src/video_player.js"></script>
 </body>
 
 </html>
