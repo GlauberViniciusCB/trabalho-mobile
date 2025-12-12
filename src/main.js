@@ -31,3 +31,6 @@ const videoPlayer = new VideoPlayer('uploadBtn', 'videoInput', 'videoPlayer', 'm
 user.onStream = (stream) => {
     videoPlayer.startVideo(stream, true, false);
 }
+user.onSetDuration = (_duration) => {
+    videoPlayer.setVideoDuration(_duration);
+}

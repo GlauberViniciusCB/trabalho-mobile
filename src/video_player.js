@@ -142,6 +142,11 @@ export default class VideoPlayer {
             String(secs).padStart(2, '0');
     }
 
+    setVideoDuration(_duration) {
+        let durationTime = VideoPlayer.formatTime(_duration);
+        this.duration.textContent = durationTime;
+    }
+
     async startVideo(media, isMediaStream = false, isCallStarter = false) {
         document.querySelector('.videoPlayer').classList.remove('barulho');
         document.querySelector('.uploadBtn').classList.add('hidden');
@@ -152,18 +157,20 @@ export default class VideoPlayer {
         else {
             this.video.src = media;
         }
-        
+
         this.video.style.display = "block";
 
-        this.video.addEventListener('loadedmetadata', () => {
-            let durationTime = VideoPlayer.formatTime(this.video.duration);
-            this.duration.textContent = durationTime;
-        });
+        if (isCallStarter) {
+            this.video.addEventListener('loadedmetadata', () => {
+                this.setVideoDuration(this.video.duration);
+            });
+        }
 
         await this.play();
 
         this.mediaStream = this.video.captureStream();
         if (isCallStarter) {
+            this.user.sendData('video-duration', this.video.duration);
             this.user.startCall(this.mediaStream);
         }
     }

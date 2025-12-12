@@ -61,8 +61,26 @@ export default class User {
     }
 
     receiveDataCallback(data) {
-        this.addMessage(this.conn.peer, data);
         console.log(`Mensagem recebida: ${data}`);
+
+        if (data['type'] === 'message') {
+            this.addMessage(this.conn.peer, data['data']);
+        }
+        else if (data['type'] === 'video-duration') {
+            this.onSetDuration?.(data['data']);
+        }
+    }
+
+    sendData(type, data) {
+        if (!this.isConnected) {
+            console.error("Tentativa de enviar dados antes de fazer conexão.");
+            return;
+        }
+
+        this.conn.send({
+            'type': type,
+            'data': data
+        });
     }
 
     sendMessage(message) {
@@ -70,7 +88,8 @@ export default class User {
             console.error("Tentativa de enviar mensagem antes de fazer conexão.");
             return;
         }
-        this.conn.send(message);
+
+        this.sendData('message', message);
         this.addMessage(this.id, message)
         console.log(`Mensagem enviada: ${message}`);
     }
