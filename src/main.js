@@ -27,7 +27,27 @@ sendBtn.addEventListener('click', (e) => {
     user.sendMessage(message);
 });
 
-const videoPlayer = new VideoPlayer('uploadBtn', 'videoInput', 'videoPlayer', 'mediaControls', 'togglePlayBtn', 'videoPlayerDiv', 'pauseIcon', 'playIcon', 'currentTime', 'duration', 'videoSubtitles', 'subtitlesBtn', 'subtitlesInput', 'toggleSoundBtn', 'soundOnIcon', 'soundOffIcon', user);
+const videoPlayer = new VideoPlayer(
+    {
+        uploadBtnId: 'uploadBtn',
+        videoInputId: 'videoInput',
+        videoPlayerId: 'videoPlayer',
+        mediaControlsId: 'mediaControls',
+        togglePlayBtnId: 'togglePlayBtn',
+        videoPlayerDivId: 'videoPlayerDiv',
+        pauseIconId: 'pauseIcon',
+        playIconId: 'playIcon',
+        currentTimeId: 'currentTime',
+        durationId: 'duration',
+        videoSubtitlesId: 'videoSubtitles',
+        subtitlesBtnId: 'subtitlesBtn',
+        subtitlesInputId: 'subtitlesInput',
+        toggleSoundBtnId: 'toggleSoundBtn',
+        soundOnId: 'soundOnIcon',
+        soundOffId: 'soundOffIcon'
+    },
+    user
+);
 user.onStream = (stream) => {
     videoPlayer.startVideo(stream, true, false);
 }

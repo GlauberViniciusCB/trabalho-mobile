@@ -1,22 +1,23 @@
 export default class VideoPlayer {
 
-    constructor(uploadBtnId, videoInputId, videoPlayerId, mediaControlsId, togglePlayBtnId, videoPlayerDivId, pauseIconId, playIconId, currentTimeId, durationId, videoSubtitlesId, subtitlesBtnId, subtitlesInputId, toggleSoundBtnId, soundOnId, soundOffId, user) {
-        this.uploadBtn = document.getElementById(uploadBtnId);
-        this.input = document.getElementById(videoInputId);
-        this.video = document.getElementById(videoPlayerId);
-        this.mediaControls = document.getElementById(mediaControlsId);
-        this.togglePlayBtn = document.getElementById(togglePlayBtnId);
-        this.playerDiv = document.getElementById(videoPlayerDivId);
-        this.playIcon = document.getElementById(playIconId);
-        this.pauseIcon = document.getElementById(pauseIconId);
-        this.currentTime = document.getElementById(currentTimeId);
-        this.duration = document.getElementById(durationId);
-        this.subtitles = document.getElementById(videoSubtitlesId);
-        this.subtitlesBtn = document.getElementById(subtitlesBtnId);
-        this.subtitlesInput = document.getElementById(subtitlesInputId);
-        this.soundOn = document.getElementById(soundOnId);
-        this.soundOff = document.getElementById(soundOffId);
-        this.toggleSoundBtn = document.getElementById(toggleSoundBtnId);
+    constructor(config, user) {
+        this.uploadBtn = document.getElementById(config.uploadBtnId);
+        this.input = document.getElementById(config.videoInputId);
+        this.video = document.getElementById(config.videoPlayerId);
+        this.mediaControls = document.getElementById(config.mediaControlsId);
+        this.togglePlayBtn = document.getElementById(config.togglePlayBtnId);
+        this.playerDiv = document.getElementById(config.videoPlayerDivId);
+        this.playIcon = document.getElementById(config.playIconId);
+        this.pauseIcon = document.getElementById(config.pauseIconId);
+        this.currentTime = document.getElementById(config.currentTimeId);
+        this.duration = document.getElementById(config.durationId);
+        this.subtitles = document.getElementById(config.videoSubtitlesId);
+        this.subtitlesBtn = document.getElementById(config.subtitlesBtnId);
+        this.subtitlesInput = document.getElementById(config.subtitlesInputId);
+        this.toggleSoundBtn = document.getElementById(config.toggleSoundBtnId);
+        this.soundOn = document.getElementById(config.soundOnId);
+        this.soundOff = document.getElementById(config.soundOffId);
+
         this.user = user;
         this.mediaStream = null;
 
