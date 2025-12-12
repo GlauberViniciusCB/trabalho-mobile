@@ -256,6 +256,13 @@ body {
   justify-content: flex-start;
 }
 
+.rightControls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+}
+
 .hidden {
   display: none;
 }

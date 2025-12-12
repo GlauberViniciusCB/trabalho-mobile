@@ -1,6 +1,6 @@
 export default class VideoPlayer {
 
-    constructor(uploadBtnId, videoInputId, videoPlayerId, mediaControlsId, togglePlayBtnId, videoPlayerDivId, pauseIconId, playIconId, currentTimeId, durationId, videoSubtitlesId, subtitlesBtnId, subtitlesInputId, user) {
+    constructor(uploadBtnId, videoInputId, videoPlayerId, mediaControlsId, togglePlayBtnId, videoPlayerDivId, pauseIconId, playIconId, currentTimeId, durationId, videoSubtitlesId, subtitlesBtnId, subtitlesInputId, toggleSoundBtnId, soundOnId, soundOffId, user) {
         this.uploadBtn = document.getElementById(uploadBtnId);
         this.input = document.getElementById(videoInputId);
         this.video = document.getElementById(videoPlayerId);
@@ -14,10 +14,14 @@ export default class VideoPlayer {
         this.subtitles = document.getElementById(videoSubtitlesId);
         this.subtitlesBtn = document.getElementById(subtitlesBtnId);
         this.subtitlesInput = document.getElementById(subtitlesInputId);
+        this.soundOn = document.getElementById(soundOnId);
+        this.soundOff = document.getElementById(soundOffId);
+        this.toggleSoundBtn = document.getElementById(toggleSoundBtnId);
         this.user = user;
         this.mediaStream = null;
 
         this.isVideoPlaying = false;
+        this.isMuted = false;
 
         this.init();
     }
@@ -30,6 +34,22 @@ export default class VideoPlayer {
         this.playerDiv.addEventListener('mouseleave', (e) => this.handleMouseLeave(e));
         this.togglePlayBtn.addEventListener('click', (e) => this.handleTogglePlayBtn(e));
         this.subtitlesBtn.addEventListener('click', (e) => this.handleSubtitlesBtnClick(e));
+        this.toggleSoundBtn.addEventListener('click', (e) => this.toggleSound(e));
+    }
+
+    toggleSound(e) {
+        e.preventDefault();
+
+        this.isMuted = !this.isMuted;
+        this.video.muted = this.isMuted;
+        if (this.isMuted) {
+            this.soundOn.classList.add('hidden');
+            this.soundOff.classList.remove('hidden');
+        }
+        else {
+            this.soundOff.classList.add('hidden');
+            this.soundOn.classList.remove('hidden');
+        }
     }
 
     handleSubtitlesChange(e) {
