@@ -291,6 +291,12 @@ body {
   max-height: 50%;
 }
 
+#gifBtn {
+  all: unset;
+  cursor: pointer;
+  width: fit-content;
+}
+
 .hidden {
   display: none;
 }
