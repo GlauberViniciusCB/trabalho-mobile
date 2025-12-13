@@ -63,8 +63,8 @@
                             </g>
                         </svg>
 
-                        <svg id="soundOffIcon" class="hidden" width="22px" height="22px" fill="#ffffff" stroke="#ffffff" version="1.1"
-                            viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <svg id="soundOffIcon" class="hidden" width="22px" height="22px" fill="#ffffff" stroke="#ffffff"
+                            version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                             <g>
                                 <g fill="none" fill-rule="evenodd" stroke="none">
                                     <g transform="translate(42.667 59.582)" fill="#fff">
@@ -97,12 +97,18 @@
 
         <div class="inputChat">
             <input type="text" id="mensagemInput" class="chatInput" placeholder="Digite Sua Mensagem">
+                <div id="gifWindow" class="gifWindow hidden">
+                    <input id="gifInput" type="text" placeholder="Procure um GIF">
+                    <div class="gifBoard" id="gifBoard"></div>
+                </div>
+                <button id="gifBtn">GIF</button>
             <button id="enviarMensagem" class="enviarBtn">Enviar</button>
         </div>
     </div>
     <script type="module" src="/src/main.js"></script>
     <script src="/src/srt_converter.js"></script>
     <script type="module" src="/src/video_player.js"></script>
+    <script type="module" src="/src/gifs.js"></script>
 </body>
 
 </html>

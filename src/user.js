@@ -63,7 +63,7 @@ export default class User {
 
     // Callback para recepção de dados
     receiveDataCallback(data) {
-        console.log(`Mensagem recebida: ${data}`);
+        console.log(`Mensagem recebida: ${JSON.stringify(data)}`);
 
         // Mensagem de texto no chat
         if (data['type'] === 'message') {
@@ -120,7 +120,16 @@ export default class User {
 
         const contentDiv = document.createElement("div");
         contentDiv.className = "conteudoMensagem";
-        contentDiv.textContent = message;
+
+        if (message.startsWith('/gif')) {
+            let url = message.split(' ')[1];
+            let img = document.createElement('img');
+            img.src = url;
+            contentDiv.appendChild(img);
+        }
+        else {
+            contentDiv.textContent = message;
+        }
 
         msgDiv.appendChild(contentDiv);
         this.chatMessages.appendChild(msgDiv);

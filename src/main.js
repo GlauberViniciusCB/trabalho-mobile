@@ -1,3 +1,4 @@
+import GifWindow from './gifs.js';
 import './style.css'
 import User from './user.js'
 import VideoPlayer from './video_player.js';
@@ -27,6 +28,16 @@ sendBtn.addEventListener('click', (e) => {
     user.sendMessage(message);
 });
 
+const gifWindow = new GifWindow(
+    {
+        gifWindowId: 'gifWindow',
+        gifBtnId: 'gifBtn',
+        gifSearchId: 'gifSearch',
+        gifBoardId: 'gifBoard',
+        gifInputId: 'gifInput'
+    }
+);
+
 const videoPlayer = new VideoPlayer(
     {
         uploadBtnId: 'uploadBtn',
@@ -48,6 +59,14 @@ const videoPlayer = new VideoPlayer(
     },
     user
 );
+
+gifWindow.onGifSelect = (id) => {
+    let url = gifWindow.gifs.find(obj => obj['id'] === id)['media_formats']['gif']['url'];
+    if (url) {
+        user.sendMessage(`/gif ${url}`);
+    }
+}
+
 user.onStream = (stream) => {
     videoPlayer.startVideo(stream, true, false);
 }
