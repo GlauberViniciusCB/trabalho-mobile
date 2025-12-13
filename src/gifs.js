@@ -30,6 +30,7 @@ export default class GifWindow {
 
     handleInputSubmit() {
         this.loadGifs(this.gifInput.value)
+        this.gifInput.value = '';
     }
 
     handleGifBtnClick(e) {
