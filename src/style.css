@@ -8,7 +8,7 @@
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,7 +22,8 @@ body {
 
   width: 100%;
   max-width: 600px;
-  height: 90vh;
+  height: 100vh;
+  max-height: 100%;
   background: white;
   display: flex;
   flex-direction: column;
@@ -162,8 +163,9 @@ body {
   border-top: 1px solid #dcdcdc;
   display: flex;
   gap: 10px;
-  position: sticky;
+  position: fixed;
   bottom: 0;
+  height: 74px;
 }
 
 .chatInput {
@@ -261,6 +263,14 @@ body {
   align-items: center;
   justify-content: flex-start;
   gap: 15px;
+}
+
+.gifWindow {
+  position: fixed;
+  width: 25vw;
+  height: 25vh;
+  background-color: red;
+  bottom: 80px;
 }
 
 .hidden {
