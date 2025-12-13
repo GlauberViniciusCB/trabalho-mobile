@@ -66,8 +66,8 @@ export default class VideoPlayer {
             const reader = new FileReader();
 
             reader.onload = (e) => {
+                // Converte legendas .srt para .vtt
                 const srtContent = e.target.result;
-
                 const vttContent = srt2webvtt(srtContent);
 
                 const vttBlob = new Blob([vttContent], { type: 'text/vtt' });

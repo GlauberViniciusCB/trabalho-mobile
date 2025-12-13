@@ -38,6 +38,7 @@ export default class User {
         this.chatMessages = document.querySelector('.chatMensagens');
     }
 
+    // Conecta a uma outra pessoa
     connect(destId) {
         if (!this.isPeerCreated) {
             console.error("Tentativa de conexão antes do peer ser criado");
@@ -60,17 +61,25 @@ export default class User {
         console.log(`Conexão estabelecida com ID: ${this.conn.peer}`);
     }
 
+    // Callback para recepção de dados
     receiveDataCallback(data) {
         console.log(`Mensagem recebida: ${data}`);
 
+        // Mensagem de texto no chat
         if (data['type'] === 'message') {
             this.addMessage(this.conn.peer, data['data']);
         }
+        // Informação da duração do vídeo sendo exibido
         else if (data['type'] === 'video-duration') {
             this.onSetDuration?.(data['data']);
         }
     }
 
+    /*
+    Comunica com pessoa conectada
+        type: tipo de dado sendo enviado(ex.: 'message', 'video-duration')
+        data: dado enviado
+    */
     sendData(type, data) {
         if (!this.isConnected) {
             console.error("Tentativa de enviar dados antes de fazer conexão.");
@@ -83,6 +92,7 @@ export default class User {
         });
     }
 
+    // Envia mensagem no chat para a pessoa conectada
     sendMessage(message) {
         if (!this.isConnected) {
             console.error("Tentativa de enviar mensagem antes de fazer conexão.");
@@ -94,6 +104,11 @@ export default class User {
         console.log(`Mensagem enviada: ${message}`);
     }
 
+    /*
+    Adiciona nova mensagem de texto no chat
+        sender: ID do remetente
+        message: conteúdo da mensagem
+    */
     addMessage(sender, message) {
         this.messages.push({
             'sender': sender,
@@ -133,6 +148,10 @@ export default class User {
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
 
+    /* 
+    Inicia uma chamada com a pessoa conectada para a transmissão do vídeo
+        mediaStream: objeto MediaStream que vai ser transmitido
+    */
     startCall(mediaStream) {
         if (!this.isConnected) {
             console.error("Tentativa de ligação antes de fazer conexão.");
