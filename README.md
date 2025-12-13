@@ -30,4 +30,4 @@ cd android
 ```
 ./gradlew assembleRelease
 ```
-O arquivo .apk gerado estará em `app\android\app\build\outputs\apk`.
+O arquivo .apk gerado estará em `android\app\build\outputs\apk`.
