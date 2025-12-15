@@ -1,6 +1,7 @@
 import './style.css'
 import User from './user.js'
 import VideoPlayer from './video_player.js';
+import CreatedRoomPopup from './created_room_popup.js';
 
 const user = new User();
 
@@ -48,6 +49,17 @@ const videoPlayer = new VideoPlayer(
     },
     user
 );
+
+const createdRoomPopup = new CreatedRoomPopup(
+    {
+        popUpId: 'createdRoomPopup',
+        overlayId: 'overlay',
+        idAreaId: 'roomId',
+        copyBtnId: 'copyBtn',
+        closeBtnId: 'closeBtn',
+    }
+)
+
 user.onStream = (stream) => {
     videoPlayer.startVideo(stream, true, false);
 }

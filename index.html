@@ -10,6 +10,18 @@
 </head>
 
 <body>
+    <div class="overlay" id="overlay"></div>
+    <div class="roomCreatedPopup" id="createdRoomPopup">
+        <h2 class="popupTitle">Sala criada!</h2>
+        <div class="popupDesc">
+            <p>Envie o seguinte ID para seu amigo(a) para que ele(a) possa se conectar:</p>
+        </div>
+        <h2 id="roomId">Carregando ID ...</h2>
+        <div class="popupButtons">
+            <button id="copyBtn">Copiar</button>
+            <button id="closeBtn">Fechar</button>
+        </div>
+    </div>
     <div class="containerChat">
         <div class="videoPlayer barulho" id="videoPlayerDiv">
             <video id="videoPlayer" src="" muted="muted">
@@ -63,8 +75,8 @@
                             </g>
                         </svg>
 
-                        <svg id="soundOffIcon" class="hidden" width="22px" height="22px" fill="#ffffff" stroke="#ffffff" version="1.1"
-                            viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <svg id="soundOffIcon" class="hidden" width="22px" height="22px" fill="#ffffff" stroke="#ffffff"
+                            version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                             <g>
                                 <g fill="none" fill-rule="evenodd" stroke="none">
                                     <g transform="translate(42.667 59.582)" fill="#fff">
@@ -103,6 +115,7 @@
     <script type="module" src="/src/main.js"></script>
     <script src="/src/srt_converter.js"></script>
     <script type="module" src="/src/video_player.js"></script>
+    <script type="module" src="/src/created_room_popup.js"></script>
 </body>
 
 </html>
