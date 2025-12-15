@@ -297,6 +297,69 @@ body {
   width: fit-content;
 }
 
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #11111194;
+  z-index: 1000;
+}
+
+.roomCreatedPopup {
+  position: fixed;
+  background-color: #fff;
+  border-radius: 5px;
+  width: 95vw;
+  z-index: 1001;
+}
+
+.roomCreatedPopup h2 {
+  display: flex;
+  justify-content: center;
+  margin: 15px;
+  padding-bottom: 10px;
+}
+
+.popupDesc {
+  font-size: 18px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.popupTitle {
+  border-bottom: 1px solid #111;
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-bottom: 10px;
+}
+
+.popupButtons button {
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 8px;
+  border-width: 0px;
+  width: 35%;
+}
+
+#copyBtn {
+  background-color: #3a8f63;
+  color: white;
+}
+
+#copyBtn:active {
+  background-color: #2d6a47;
+}
+
+#closeBtn:active {
+  background-color: #b8b8b8;
+}
+
 .hidden {
   display: none;
 }
