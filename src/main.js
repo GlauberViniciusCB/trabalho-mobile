@@ -61,15 +61,24 @@ const videoPlayer = new VideoPlayer(
     user
 );
 
-const createdRoomPopup = new CreatedRoomPopup(
-    {
-        popUpId: 'createdRoomPopup',
-        overlayId: 'overlay',
-        idAreaId: 'roomId',
-        copyBtnId: 'copyBtn',
-        closeBtnId: 'closeBtn',
+user.onPeerCreated = () => {
+    if (localStorage.getItem('isHost') === 'true') {
+        const createdRoomPopup = new CreatedRoomPopup(
+            {
+                popUpId: 'createdRoomPopup',
+                overlayId: 'overlay',
+                idAreaId: 'roomId',
+                copyBtnId: 'copyBtn',
+                closeBtnId: 'closeBtn',
+            },
+            user.id
+        );
     }
-);
+    else {
+        let peerId = localStorage.getItem('peerId');
+        user.connect(peerId);
+    }
+};
 
 gifWindow.onGifSelect = (id) => {
     let url = gifWindow.gifs.find(obj => obj['id'] === id)['media_formats']['gif']['url'];

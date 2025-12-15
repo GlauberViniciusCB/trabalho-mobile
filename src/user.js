@@ -15,6 +15,8 @@ export default class User {
         this.peer.on('open', (_id) => {
             this.id = _id;
             this.isPeerCreated = true;
+
+            this.onPeerCreated?.();
             console.log(`Peer criado com ID: ${_id}`);
         });
 

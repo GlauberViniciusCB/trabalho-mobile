@@ -2,17 +2,24 @@ import { Clipboard } from "@capacitor/clipboard";
 
 export default class CreatedRoomPopup {
 
-    constructor(config) {
+    constructor(config, userId) {
         this.popUp = document.getElementById(config['popUpId']);
         this.overlay = document.getElementById(config['overlayId']);
         this.idArea = document.getElementById(config['idAreaId']);
         this.copyBtn = document.getElementById(config['copyBtnId']);
         this.closeBtn = document.getElementById(config['closeBtnId']);
 
+        if (userId !== '') {
+            this.idArea.textContent = userId;
+        }
+
         this.init();
     }
 
     init() {
+        this.popUp.classList.remove('hidden');
+        this.overlay.classList.remove('hidden');
+
         this.closeBtn.addEventListener('click', (e) => this.handleCloseBtn(e));
         this.copyBtn.addEventListener('click', (e) => this.handleCopyBtn(e));
 

@@ -204,8 +204,6 @@ body {
 .form-container {
   background: rgba(255, 255, 255, 0.95);
   padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   width: 320px;
   animation: formAppear 0.8s ease-out;
 }
@@ -268,6 +266,11 @@ body {
   margin-top: 25px;
 }
 
+.buttons-container a {
+  display: flex;
+  justify-content: center;
+}
+
 .btn {
   padding: 14px;
   border: none;
@@ -283,14 +286,14 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #1e90ff 0%, #00bfff 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(30, 144, 255, 0.4);
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+  color: rgb(0, 0, 0);
+  box-shadow: 0 4px 15px #3a8f6399;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(30, 144, 255, 0.6);
+  box-shadow: 0 6px 20px #3a8f6399;
 }
 
 .btn-primary:active {
@@ -307,7 +310,7 @@ body {
 
 .btn-secondary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(58, 143, 99, 0.6);
+  box-shadow: 0 6px 20px #3a8f6399;
 }
 
 .btn-secondary:active {
@@ -380,6 +383,11 @@ body {
     width: 90%;
     max-width: 320px;
   }
+}
+
+#errorMessage {
+  margin: 5px;
+  color: red;
 }
 
 .hidden {
