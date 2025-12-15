@@ -18,7 +18,7 @@ class FrontPage {
         e.preventDefault();
 
         localStorage.setItem('isHost', 'true');
-        window.location.href = './index.html';
+        window.location.href = './room.html';
     }
 
     handleJoinButton(e) {
@@ -29,7 +29,7 @@ class FrontPage {
         }
 
         localStorage.setItem('peerId', this.idInput.value)
-        window.location.href = './index.html'
+        window.location.href = './room.html'
     }
 
 }
