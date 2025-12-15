@@ -12,6 +12,8 @@ class FrontPage {
     }
 
     init() {
+        Preferences.clear
+
         this.createBtn.addEventListener('click', (e) => this.handleCreateButton(e));
         this.joinBtn.addEventListener('click', (e) => this.handleJoinButton(e));
     }
@@ -41,5 +43,10 @@ class FrontPage {
     }
 
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await Preferences.remove({ key: 'isHost' });
+    await Preferences.remove({ key: 'peerId' });
+});
 
 const frontPage = new FrontPage('roomId', 'createRoomBtn', 'joinRoomBtn', 'errorMessage')
