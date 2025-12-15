@@ -1,3 +1,5 @@
+import { Preferences } from "@capacitor/preferences";
+
 class FrontPage {
     
     constructor(idInputId, createBtnId, joinBtnId, errorMessageId) {
@@ -14,21 +16,27 @@ class FrontPage {
         this.joinBtn.addEventListener('click', (e) => this.handleJoinButton(e));
     }
 
-    handleCreateButton(e) {
+    async handleCreateButton(e) {
         e.preventDefault();
 
-        localStorage.setItem('isHost', 'true');
+        await Preferences.set({
+            key: 'isHost',
+            value: 'true'
+        });
         window.location.href = './room.html';
     }
 
-    handleJoinButton(e) {
+    async handleJoinButton(e) {
         e.preventDefault();
         if (this.idInput.value === '') {
             this.errorMessage.classList.remove('hidden');
             return;
         }
 
-        localStorage.setItem('peerId', this.idInput.value)
+        await Preferences.set({
+            key: 'peerId',
+            value: this.idInput.value
+        });
         window.location.href = './room.html'
     }
 

@@ -1,3 +1,4 @@
+import { Preferences } from '@capacitor/preferences';
 import GifWindow from './gifs.js';
 import './style.css'
 import User from './user.js'
@@ -61,8 +62,11 @@ const videoPlayer = new VideoPlayer(
     user
 );
 
-user.onPeerCreated = () => {
-    if (localStorage.getItem('isHost') === 'true') {
+async function handlePeerCreated() {
+    let { value: isHost } = await Preferences.get({
+        key: 'isHost'
+    })
+    if (isHost === 'true') {
         const createdRoomPopup = new CreatedRoomPopup(
             {
                 popUpId: 'createdRoomPopup',
@@ -75,9 +79,15 @@ user.onPeerCreated = () => {
         );
     }
     else {
-        let peerId = localStorage.getItem('peerId');
+        let {value: peerId} = await Preferences.get({
+            key: 'peerId'
+        });
         user.connect(peerId);
     }
+}
+
+user.onPeerCreated = () => {
+    handlePeerCreated()
 };
 
 gifWindow.onGifSelect = (id) => {
