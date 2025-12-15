@@ -1,3 +1,5 @@
+import srt2webvtt from "./srt_converter";
+
 export default class VideoPlayer {
 
     constructor(config, user) {

@@ -1,6 +1,6 @@
 // Source: https://www.webvtt.org
 
-function srt2webvtt(data) {
+export default function srt2webvtt(data) {
     // remove dos newlines
     var srt = data.replace(/\r+/g, '');
     // trim white space start and end
