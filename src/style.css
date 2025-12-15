@@ -370,10 +370,6 @@ body {
   background-color: #b8b8b8;
 }
 
-.hidden {
-  display: none;
-}
-
 /* Alguns Ajuste Para Mobile */
 
 @media (max-width: 768px) {
@@ -415,3 +411,6 @@ body {
 
 }
 
+.hidden {
+  display: none;
+}
