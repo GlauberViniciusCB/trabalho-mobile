@@ -11,6 +11,7 @@ export default class User {
         this.isPeerCreated = false;
         this.call = null;
         this.isOnCall = false;
+        this.isVideoHost = false;
 
         this.peer.on('open', (_id) => {
             this.id = _id;
@@ -75,11 +76,21 @@ export default class User {
         else if (data['type'] === 'video-duration') {
             this.onSetDuration?.(data['data']);
         }
+
+        // Pausa vídeo
+        else if (data['type'] === 'pause') {
+            this.onVideoPause?.();
+        }
+
+        // Da play no video
+        else if (data['type'] === 'play') {
+            this.onVideoPlay?.();
+        }
     }
 
     /*
     Comunica com pessoa conectada
-        type: tipo de dado sendo enviado(ex.: 'message', 'video-duration')
+        type: tipo de dado sendo enviado('message', 'video-duration', 'pause', 'play')
         data: dado enviado
     */
     sendData(type, data) {
@@ -102,7 +113,7 @@ export default class User {
         }
 
         this.sendData('message', message);
-        this.addMessage(this.id, message)
+        this.addMessage(this.id, message);
         console.log(`Mensagem enviada: ${message}`);
     }
 
@@ -176,6 +187,7 @@ export default class User {
             console.error(`PeerJS Error: ${error}`);
         });
 
+        this.isVideoHost = true;
         console.log("[DEBUG]: Chamada feita.")
     }
 

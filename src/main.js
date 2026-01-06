@@ -100,6 +100,15 @@ gifWindow.onGifSelect = (id) => {
 user.onStream = (stream) => {
     videoPlayer.startVideo(stream, true, false);
 }
+
 user.onSetDuration = (_duration) => {
     videoPlayer.setVideoDuration(_duration);
+}
+
+user.onVideoPause = () => {
+    videoPlayer.pause();
+}
+
+user.onVideoPlay = () => {
+    videoPlayer.play();
 }

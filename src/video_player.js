@@ -100,28 +100,34 @@ export default class VideoPlayer {
     }
 
     handleMouseEnter(e) {
-        if (this.isVideoPlaying) {
-            this.mediaControls.classList.remove('hidden');
-        }
+        this.mediaControls.classList.remove('hidden');
     }
 
     handleMouseLeave(e) {
-        if (this.isVideoPlaying) {
-            this.mediaControls.classList.add('hidden');
-        }
+        this.mediaControls.classList.add('hidden');
     }
 
     handleTogglePlayBtn(e) {
         e.preventDefault();
         if (this.isVideoPlaying) {
-            this.pause();
+            this.requestPause();
         }
         else {
-            this.play();
+            this.requestPlay();
         }
     }
 
-    pause(e) {
+    requestPause() {
+        this.user.sendData('pause', '');
+        this.pause();
+    }
+
+    requestPlay() {
+        this.user.sendData('play', '');
+        this.play();
+    }
+
+    pause() {
         this.video.pause();
         this.isVideoPlaying = false;
 
@@ -129,7 +135,7 @@ export default class VideoPlayer {
         this.playIcon.classList.remove('hidden');
     }
 
-    async play(e) {
+    async play() {
         await this.video.play();
         this.isVideoPlaying = true;
 
