@@ -4,6 +4,7 @@ import './style.css'
 import User from './user.js'
 import VideoPlayer from './video_player.js';
 import CreatedRoomPopup from './created_room_popup.js';
+import Settings from './settings.js';
 
 const user = new User();
 
@@ -60,6 +61,23 @@ const videoPlayer = new VideoPlayer(
         soundOffId: 'soundOffIcon'
     },
     user
+);
+
+const settings = new Settings(
+    {
+        containerId: 'settings-container',
+        chatContainerId: 'containerChat',
+        settingsBtnId: 'settingsBtn',
+        applyBtnId: 'applyBtn',
+        backBtn: 'backBtn',
+
+        captionSizeId: 'captionSize',
+        captionColorId: 'captionColor',
+        captionBgId: 'captionBg',
+        captionOpacityId: 'captionOpacity',
+        captionDelayId: 'captionDelay'
+    },
+    videoPlayer
 );
 
 async function handlePeerCreated() {

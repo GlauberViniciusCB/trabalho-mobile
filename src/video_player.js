@@ -204,4 +204,26 @@ export default class VideoPlayer {
         }
     }
 
+    setSubtitlesDelay(delayMs) {
+        if (!this.subtitles.track) {
+            return
+        }
+
+        const textTrack = this.subtitles.track; 
+
+        if (!textTrack || !textTrack.cues) {
+            return
+        }
+
+        const delaySeconds = delayMs / 1000;
+
+        for (let i = 0; i < textTrack.cues.length; i++) {
+            const cue = textTrack.cues[i];
+            cue.startTime += delaySeconds;
+            cue.endTime += delaySeconds;
+        }
+
+        console.log(`[DEBUG]: Delay de ${delayMs}ms aplicado nas legendas`);
+    }
+
 }
