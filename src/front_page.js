@@ -12,7 +12,7 @@ class FrontPage {
     }
 
     init() {
-        Preferences.clear
+        Preferences.clear();
 
         this.createBtn.addEventListener('click', (e) => this.handleCreateButton(e));
         this.joinBtn.addEventListener('click', (e) => this.handleJoinButton(e));

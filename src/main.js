@@ -5,31 +5,17 @@ import User from './user.js'
 import VideoPlayer from './video_player.js';
 import CreatedRoomPopup from './created_room_popup.js';
 import Settings from './settings.js';
+import RoomController from './room_controller.js';
+
 
 const user = new User();
 
-const sendBtn = document.getElementById('enviarMensagem');
-const inputMsg = document.getElementById('mensagemInput');
-
-sendBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    let message = inputMsg.value;
-    inputMsg.value = '';
-
-    if (message === '') {
-        return;
-    }
-
-    if (!user.isConnected) {
-        if (message.startsWith('/connect')) {
-            user.connect(message.split(' ')[1]);
-        }
-        return;
-    }
-
-    user.sendMessage(message);
-});
+const roomController = new RoomController({
+    "chatToggleBtnId": "chatToggleBtn",
+    "containerChatId": "containerChat",
+    'enviarMensagemId': 'enviarMensagem',
+    'mensagemInputId': 'mensagemInput'
+}, user);
 
 const gifWindow = new GifWindow(
     {
@@ -97,7 +83,7 @@ async function handlePeerCreated() {
         );
     }
     else {
-        let {value: peerId} = await Preferences.get({
+        let { value: peerId } = await Preferences.get({
             key: 'peerId'
         });
         user.connect(peerId);
