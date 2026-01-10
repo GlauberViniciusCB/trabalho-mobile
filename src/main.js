@@ -44,7 +44,8 @@ const videoPlayer = new VideoPlayer(
         subtitlesInputId: 'subtitlesInput',
         toggleSoundBtnId: 'toggleSoundBtn',
         soundOnId: 'soundOnIcon',
-        soundOffId: 'soundOffIcon'
+        soundOffId: 'soundOffIcon',
+        seekBarId: 'seekbar'
     },
     user
 );

@@ -19,6 +19,10 @@ export default class VideoPlayer {
         this.toggleSoundBtn = document.getElementById(config.toggleSoundBtnId);
         this.soundOn = document.getElementById(config.soundOnId);
         this.soundOff = document.getElementById(config.soundOffId);
+        this.seekbar = document.getElementById(config.seekBarId);
+
+        this.isSeeking = false;
+
 
         this.user = user;
         this.mediaStream = null;
@@ -38,7 +42,36 @@ export default class VideoPlayer {
         this.togglePlayBtn.addEventListener('click', (e) => this.handleTogglePlayBtn(e));
         this.subtitlesBtn.addEventListener('click', (e) => this.handleSubtitlesBtnClick(e));
         this.toggleSoundBtn.addEventListener('click', (e) => this.toggleSound(e));
+        this.video.addEventListener("timeupdate", () => this.updateSeekbar());
+        this.seekbar.addEventListener("input", () => {
+            this.isSeeking = true;
+            const time = (this.seekbar.value / 100) * this.video.duration;
+            this.video.currentTime = time;
+        });
+
+        this.seekbar.addEventListener("change", () => {
+            this.isSeeking = false;
+        });
+
     }
+
+    updateSeekbar() {
+        if (!this.video.duration || this.isSeeking) return;
+
+        const progress = (this.video.currentTime / this.video.duration) * 100;
+        this.seekbar.value = progress;
+
+        this.seekbar.style.background = `
+        linear-gradient(
+            to right,
+            #3a8f63 0%,
+            #3a8f63 ${progress}%,
+            #777 ${progress}%,
+            #777 100%
+        )
+    `;
+    }
+
 
     toggleSound(e) {
         e.preventDefault();
@@ -209,7 +242,7 @@ export default class VideoPlayer {
             return
         }
 
-        const textTrack = this.subtitles.track; 
+        const textTrack = this.subtitles.track;
 
         if (!textTrack || !textTrack.cues) {
             return
