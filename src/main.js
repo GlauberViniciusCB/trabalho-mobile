@@ -45,7 +45,7 @@ const videoPlayer = new VideoPlayer(
         toggleSoundBtnId: 'toggleSoundBtn',
         soundOnId: 'soundOnIcon',
         soundOffId: 'soundOffIcon',
-        seekBarId: 'seekbar'
+        seekBarId: 'seekbar',
     },
     user
 );
@@ -116,4 +116,9 @@ user.onVideoPause = () => {
 
 user.onVideoPlay = () => {
     videoPlayer.play();
+}
+
+user.onVideoSeek = (time) => {
+
+    videoPlayer.applyRemoteSeek(time);
 }

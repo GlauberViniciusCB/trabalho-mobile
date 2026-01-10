@@ -86,6 +86,17 @@ export default class User {
         else if (data['type'] === 'play') {
             this.onVideoPlay?.();
         }
+
+        // Adianta/Volta vídeo
+        else if (data['type'] === 'seek') {
+            if (this.isVideoHost) {
+                this.onVideoSeek?.(data['data']);
+                this.sendData('seek', data['data']); 
+            } 
+            else {
+                this.onVideoSeek?.(data['data']);
+            }
+        }
     }
 
     /*

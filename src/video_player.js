@@ -20,8 +20,11 @@ export default class VideoPlayer {
         this.soundOn = document.getElementById(config.soundOnId);
         this.soundOff = document.getElementById(config.soundOffId);
         this.seekbar = document.getElementById(config.seekBarId);
+        this.videoDuraion = 0;
 
         this.isSeeking = false;
+
+        this.currentTimeTimer = null;
 
 
         this.user = user;
@@ -43,10 +46,20 @@ export default class VideoPlayer {
         this.subtitlesBtn.addEventListener('click', (e) => this.handleSubtitlesBtnClick(e));
         this.toggleSoundBtn.addEventListener('click', (e) => this.toggleSound(e));
         this.video.addEventListener("timeupdate", () => this.updateSeekbar());
+
         this.seekbar.addEventListener("input", () => {
             this.isSeeking = true;
-            const time = (this.seekbar.value / 100) * this.video.duration;
-            this.video.currentTime = time;
+
+            const time = (this.seekbar.value / 100) * this.videoDuraion;
+
+            if (this.user.isVideoHost) {
+                this.video.currentTime = time;
+                this.user.sendData('seek', time);
+                this.updateCurrentTime();
+            }
+            else {
+                this.user.sendData('seek', time);
+            }
         });
 
         this.seekbar.addEventListener("change", () => {
@@ -55,10 +68,22 @@ export default class VideoPlayer {
 
     }
 
-    updateSeekbar() {
-        if (!this.video.duration || this.isSeeking) return;
+    restartCurrentTimeLoop() {
+        if (this.currentTimeTimer) {
+            clearTimeout(this.currentTimeTimer);
+            this.currentTimeTimer = null;
+        }
 
-        const progress = (this.video.currentTime / this.video.duration) * 100;
+        this.updateCurrentTime();
+    }
+
+
+    applyRemoteSeek(time) {
+        this.isSeeking = false;
+
+        this.video.currentTime = time;
+
+        const progress = (time / this.videoDuraion) * 100;
         this.seekbar.value = progress;
 
         this.seekbar.style.background = `
@@ -70,6 +95,26 @@ export default class VideoPlayer {
             #777 100%
         )
     `;
+
+        this.restartCurrentTimeLoop();
+    }
+
+
+    updateSeekbar() {
+        if (this.isSeeking || !this.videoDuraion) return;
+
+        const progress = (this.video.currentTime / this.videoDuraion) * 100;
+        this.seekbar.value = progress;
+
+        this.seekbar.style.background = `
+        linear-gradient(
+            to right,
+            #3a8f63 0%,
+            #3a8f63 ${progress}%,
+            #777 ${progress}%,
+            #777 100%
+        )
+        `;
     }
 
 
@@ -133,10 +178,12 @@ export default class VideoPlayer {
     }
 
     handleMouseEnter(e) {
+        this.seekbar.classList.remove('hidden');
         this.mediaControls.classList.remove('hidden');
     }
 
     handleMouseLeave(e) {
+        this.seekbar.classList.add('hidden');
         this.mediaControls.classList.add('hidden');
     }
 
@@ -179,18 +226,18 @@ export default class VideoPlayer {
     }
 
     updateCurrentTime() {
-        if (!this.isVideoPlaying) {
-            return;
-        }
+        if (!this.isVideoPlaying) return;
 
-        let currentTimeFormatted = VideoPlayer.formatTime(this.video.currentTime);
-        this.currentTime.textContent = currentTimeFormatted;
+        this.currentTime.textContent =
+            VideoPlayer.formatTime(this.video.currentTime);
 
-        let timeout = (1.0 - (this.video.currentTime % 1)) * 1000;
-        setTimeout(() => {
+        const timeout = (1.0 - (this.video.currentTime % 1)) * 1000;
+
+        this.currentTimeTimer = setTimeout(() => {
             this.updateCurrentTime();
         }, timeout);
     }
+
 
     static formatTime(seconds) {
         const totalSeconds = Math.floor(seconds);
@@ -205,6 +252,7 @@ export default class VideoPlayer {
     }
 
     setVideoDuration(_duration) {
+        this.videoDuraion = _duration;
         let durationTime = VideoPlayer.formatTime(_duration);
         this.duration.textContent = durationTime;
     }
